@@ -1,18 +1,23 @@
-import Api.Models.ModelDeserializer
-import Api.Models.Security
-import kotlinx.serialization.json.*
+import Api.MoexResponse
 import moex.Request
 import moex.RequestSender
 
 
 fun main(args: Array<String>) {
-    val securities = mutableListOf<Security>()
+    /*val securities = mutableListOf<Security>()*/
     val sender = RequestSender()
     val request = Request().Securities(".json")
 
     val response = sender.Send(request)
 
     if (response.statusCode() == 200){
+        val moexResponse = MoexResponse()
+        val tables = moexResponse.ParseFromJson(response.body())[0]
+        for (sec in tables.data){
+            println("${sec["id"]}:${sec["name"]}")
+        }
+    }
+    /*if (response.statusCode() == 200){
         val deserializer = ModelDeserializer()
         val element = Json.parseToJsonElement(response.body())
         println(response.body())
@@ -27,6 +32,6 @@ fun main(args: Array<String>) {
 
     for (sec in securities){
         println("${sec.id}:${sec.name}")
-    }
+    }*/
 
 }
