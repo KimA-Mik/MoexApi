@@ -35,7 +35,10 @@ class MoexResponse {
                             val type =  Json.decodeFromJsonElement<String>(meta.jsonObject[name]?.jsonObject?.get("type")!!)
 
                             tempMap[name] = (if (type.equals("int32")){
-                                Json.decodeFromJsonElement<Int> (recordCol)
+                                if (recordCol.jsonPrimitive.intOrNull != null)
+                                    Json.decodeFromJsonElement<Int> (recordCol)
+                                else
+                                    Int
                             }else if (type.equals("string")){
                                 if (recordCol.jsonPrimitive.isString) {
                                     Json.decodeFromJsonElement<String>(recordCol)
@@ -43,7 +46,10 @@ class MoexResponse {
                                     String()
                                 }
                             }else if(type.equals("double")){
-                                Json.decodeFromJsonElement<Double> (recordCol)
+                                if (recordCol.jsonPrimitive.doubleOrNull != null)
+                                    Json.decodeFromJsonElement<Double> (recordCol)
+                                else
+                                    Double
                             }
                             else{
                                 String()
