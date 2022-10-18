@@ -38,7 +38,7 @@ class MoexResponse {
                                 if (recordCol.jsonPrimitive.intOrNull != null)
                                     Json.decodeFromJsonElement<Int> (recordCol)
                                 else
-                                    Int
+                                    0
                             }else if (type.equals("string")){
                                 if (recordCol.jsonPrimitive.isString) {
                                     Json.decodeFromJsonElement<String>(recordCol)
@@ -49,7 +49,12 @@ class MoexResponse {
                                 if (recordCol.jsonPrimitive.doubleOrNull != null)
                                     Json.decodeFromJsonElement<Double> (recordCol)
                                 else
-                                    Double
+                                    Double.NaN
+                            }else if (type.equals("int64")){
+                                if (recordCol.jsonPrimitive.longOrNull != null)
+                                    Json.decodeFromJsonElement<Long> (recordCol)
+                                else
+                                    0L
                             }
                             else{
                                 String()

@@ -16,12 +16,13 @@ fun main(args: Array<String>) {
 
     if (response.statusCode() == 200){
         val moexResponse = MoexResponse()
-        var tables : MoexTable
+        var tables : MutableList<MoexTable>
         val time = measureTimeMillis {
-            tables = moexResponse.ParseFromJson(response.body())[0]
+            tables = moexResponse.ParseFromJson(response.body())
         }
-        for (sec in tables.data){
-            println("${sec["SECID"]}:${sec["SHORTNAME"]}")
+        println("${tables[1].name}")
+        for (sec in tables[1].data){
+            println("${sec["SECID"]}:${ if (sec["BID"] == null) "No BID" else sec["BID"]  } - ${sec["ISSUECAPITALIZATION"]}")
         }
         println("It took $time ms")
     }
