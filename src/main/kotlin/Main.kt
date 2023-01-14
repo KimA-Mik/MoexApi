@@ -6,7 +6,6 @@ import kotlin.system.measureTimeMillis
 
 
 fun main(args: Array<String>) {
-    /*val securities = mutableListOf<Security>()*/
     val sender = RequestSender()
     val request = Request().Engines().Engine(Request.EngineType.stock).
     Markets().Market(Request.MarketType.shares).
@@ -26,21 +25,4 @@ fun main(args: Array<String>) {
         }
         println("It took $time ms")
     }
-    /*if (response.statusCode() == 200){
-        val deserializer = ModelDeserializer()
-        val element = Json.parseToJsonElement(response.body())
-        println(response.body())
-        var securityData = element.jsonObject["securities"]?.jsonObject?.get("data")
-        if (securityData != null) {
-            for (data in securityData.jsonArray){
-
-                securities.add(deserializer.JArrToBaseSecurity(data))
-            }
-        }
-    }
-
-    for (sec in securities){
-        println("${sec.id}:${sec.name}")
-    }*/
-
 }
